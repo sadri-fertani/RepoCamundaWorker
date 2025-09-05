@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TestWrkCmd.CamundaWorker": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

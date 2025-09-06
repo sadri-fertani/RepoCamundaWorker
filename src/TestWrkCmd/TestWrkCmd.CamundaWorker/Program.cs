@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Refit;
 using TestWrkCmd.CamundaWorker.Options;
 using TestWrkCmd.CamundaWorker.Services;
 
@@ -20,6 +21,14 @@ var host = builder
         // Register health checks
         services
             .AddHealthChecks();
+
+        // Enregistre le client Refit avec IHttpClientFactory
+        services
+            .AddRefitClient<IMonApi>()
+            .ConfigureHttpClient(c =>
+            {
+                c.BaseAddress = new Uri(configuration["Apis:MonApiURL"]!);
+            });
 
         // Register Zeebe worker and configure options
         services

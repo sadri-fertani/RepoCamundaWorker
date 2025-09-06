@@ -15,6 +15,11 @@ public class ZeebeWorker : BackgroundService
     private readonly IZeebeClient _zeebeClient;
 
     /// <summary>
+    /// Represents the API client used for interacting with the monitoring service.
+    /// </summary>
+    private readonly IMonApi _monApi;
+
+    /// <summary>
     /// Represents the logger used to log messages and events for the <see cref="ZeebeWorker"/> class.
     /// </summary>
     private readonly ILogger<ZeebeWorker> _logger;
@@ -42,11 +47,13 @@ public class ZeebeWorker : BackgroundService
     /// <see langword="null"/>.</exception>
     public ZeebeWorker
         (
+            IMonApi monApi,
             ILogger<ZeebeWorker> logger,
             IOptions<ZeebeOptions> zeebeOptions,
             IOptions<WorkerOptions> workerOptions
         )
     {
+        _monApi = monApi ?? throw new ArgumentNullException(nameof(monApi));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _zeebeOptions = zeebeOptions?.Value ?? throw new ArgumentNullException(nameof(zeebeOptions));
         _workerOptions = workerOptions?.Value ?? throw new ArgumentNullException(nameof(workerOptions));
@@ -106,7 +113,11 @@ public class ZeebeWorker : BackgroundService
     {
         _logger.LogInformation("Handling job with key: {Key}", activatedJob.Key);
 
-        var variables = new { result = $"Message from .net at {DateTime.Now}" };
+        _logger.LogInformation("Calling Api");
+        var resultApi = await _monApi.GetDataAsync();
+
+        _logger.LogInformation("Generate response");
+        var variables = new { result = $"Message from .net at {DateTime.Now} with data from api {resultApi.Hostname}/{resultApi.ApplicationName}" };
         var variablesJson = JsonSerializer.Serialize(variables);
 
         await client.NewCompleteJobCommand(activatedJob.Key)

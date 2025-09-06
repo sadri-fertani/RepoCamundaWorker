@@ -48,3 +48,10 @@ helm install testwrkcmd ./helm/testwrkcmd -n svc-space
 ![alt text](./docs/modeler-image.png)
 
 ![alt text](./docs/operate-image.png)
+
+## Extras
+### Worker call api on k8s
+#### Step 1 : Api on localhost
+Api is deployed on k8s, but temporory port forward activated (For test)
+#### Step 2 : Api on k8s
+Remove forward (To be continued)

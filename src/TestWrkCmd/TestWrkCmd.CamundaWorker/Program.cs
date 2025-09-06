@@ -15,12 +15,6 @@ IConfiguration configuration = new ConfigurationBuilder()
 
 // Configure the host
 var host = builder
-    .ConfigureAppConfiguration((context, config) =>
-    {
-        // Add configuration sources
-        config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-        config.AddEnvironmentVariables();
-    })
     .ConfigureServices((hostContext, services) =>
     {
         // Register health checks

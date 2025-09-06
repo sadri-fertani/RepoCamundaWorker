@@ -1,0 +1,24 @@
+replicaCount: 1
+
+namespace: svc-space
+
+image:
+  repository: sadrifertani/testwrkcmd
+  tag: latest
+  pullPolicy: Always
+
+containerPort: 8000
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8000
+
+ingress:
+  enabled: false
+  
+env:
+  - name: "ASPNETCORE_ENVIRONMENT"
+    value: "Production"
+
+resources: {}

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: testwrkcmd
+icon: file://assets/icon.png
+description: Déploiement d'un worker (service background) avec Helm
+type: application
+version: 0.1.0
+appVersion: "1.0"

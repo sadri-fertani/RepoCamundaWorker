@@ -55,7 +55,7 @@ public class ZeebeWorker : BackgroundService
         _zeebeClient = ZeebeClient
             .Builder()
             .UseGatewayAddress(_zeebeOptions.GatewayAddress)
-            .UsePlainText()
+            .UsePlainText() // Pas de TLS via ngrok TCP
             .Build();
     }
 

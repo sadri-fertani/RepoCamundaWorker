@@ -20,5 +20,9 @@ ingress:
 env:
   - name: "ASPNETCORE_ENVIRONMENT"
     value: "Production"
+  - name: "Apis__MonApiURL"
+    value: "http://monapi-service.api-space.svc.cluster.local"
+  - name: "Zeebe__GatewayAddress"
+    value: "4.tcp.ngrok.io:11338"
 
 resources: {}

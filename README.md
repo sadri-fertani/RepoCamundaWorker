@@ -1,3 +1,7 @@
+![Build Status](https://github.com/sadri-fertani/RepoCamundaWorker/actions/workflows/docker-publish.yml/badge.svg) ![Custom badge](https://img.shields.io/badge/Camunda-Worker-blue) ![License](https://img.shields.io/github/license/sadri-fertani/RepoCamundaWorker)
+
+> img : ghcr.io/sadri-fertani/repocamundaworker
+
 # Introduction
 This is a POC how to bind Camunda *User Task* with c# Worker deployed on k8s (Rancher).
 

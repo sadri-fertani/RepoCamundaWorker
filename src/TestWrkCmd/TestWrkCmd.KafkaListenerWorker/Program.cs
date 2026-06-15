@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Refit;
-using TestWrkCmd.CamundaWorker.Services;
 using TestWrkCmd.Common.Options;
+using TestWrkCmd.KafkaListenerWorker.Services;
 
 // Create the host builder
 var builder = Host.CreateDefaultBuilder(args);
@@ -22,19 +21,11 @@ var host = builder
         services
             .AddHealthChecks();
 
-        // Enregistre le client Refit avec IHttpClientFactory
+        // Register Kafka consumer worker and configure options
         services
-            .AddRefitClient<IMonApi>()
-            .ConfigureHttpClient(c =>
-            {
-                c.BaseAddress = new Uri(configuration["Apis:MonApiURL"]!);
-            });
-
-        // Register Zeebe worker and configure options
-        services
-            .AddHostedService<ZeebeWorker>()
+            .AddHostedService<KafkaConsumerWorker>()
             .Configure<ZeebeOptions>(configuration.GetSection("Zeebe"))
-            .Configure<WorkerOptions>(configuration.GetSection("Worker"));
+            .Configure<KafkaOptions>(configuration.GetSection("Kafka"));
     })
     .ConfigureWebHostDefaults(webBuilder =>
     {

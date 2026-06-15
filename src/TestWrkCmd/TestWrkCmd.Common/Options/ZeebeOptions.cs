@@ -1,4 +1,4 @@
-﻿namespace TestWrkCmd.CamundaWorker.Options;
+﻿namespace TestWrkCmd.Common.Options;
 
 public class ZeebeOptions
 {

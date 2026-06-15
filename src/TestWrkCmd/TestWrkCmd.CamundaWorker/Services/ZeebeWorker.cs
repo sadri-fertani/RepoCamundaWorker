@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using System.Text.Json;
-using TestWrkCmd.CamundaWorker.Options;
+using TestWrkCmd.Common.Options;
 using Zeebe.Client;
 using Zeebe.Client.Api.Responses;
 using Zeebe.Client.Api.Worker;
@@ -47,8 +47,8 @@ public class ZeebeWorker : BackgroundService
     /// <see langword="null"/>.</exception>
     public ZeebeWorker
         (
-            IMonApi monApi,
-            ILogger<ZeebeWorker> logger,
+            IMonApi? monApi,
+            ILogger<ZeebeWorker>? logger,
             IOptions<ZeebeOptions> zeebeOptions,
             IOptions<WorkerOptions> workerOptions
         )
@@ -114,10 +114,12 @@ public class ZeebeWorker : BackgroundService
         _logger.LogInformation("Handling job with key: {Key}", activatedJob.Key);
 
         _logger.LogInformation("Calling Api");
+        
         var resultApi = await _monApi.GetDataAsync();
 
         _logger.LogInformation("Generate response");
-        var variables = new { result = $"Message from .net at {DateTime.Now} with data from api {resultApi.Hostname}/{resultApi.ApplicationName}" };
+        var variables = new { result = $"Message from .net at {DateTime.Now} with data from api {resultApi.Id}/{resultApi.Message}" };
+        
         var variablesJson = JsonSerializer.Serialize(variables);
 
         await client.NewCompleteJobCommand(activatedJob.Key)

@@ -1,0 +1,11 @@
+@TestWrkCmd.Api_HostAddress = http://localhost:5275
+
+### GET Hello
+GET {{TestWrkCmd.Api_HostAddress}}/hello
+Accept: application/json
+
+### Tests
+> {%
+    client.test("Status is 200", () => client.assert(response.status === 200));
+    client.test("Message correct", () => client.assert(response.body.message === "Hello, World!"));
+%}

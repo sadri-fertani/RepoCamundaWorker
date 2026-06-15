@@ -1,11 +1,10 @@
 ﻿using Refit;
-using TestWrkCmd.CamundaWorker.Payloads;
+using TestWrkCmd.Common.Payloads;
 
 namespace TestWrkCmd.CamundaWorker.Services;
 
 public interface IMonApi
 {
-    [Get("/get-config")]
-    Task<MonApiPayload> GetDataAsync();
+    [Get("/hello")]
+    Task<RespApi> GetDataAsync();
 }
-

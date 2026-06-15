@@ -2,9 +2,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using System.Diagnostics.CodeAnalysis;
-using TestWrkCmd.CamundaWorker.Options;
-using TestWrkCmd.CamundaWorker.Payloads;
 using TestWrkCmd.CamundaWorker.Services;
+using TestWrkCmd.Common.Options;
+using TestWrkCmd.Common.Payloads;
 using Zeebe.Client;
 using Zeebe.Client.Api.Commands;
 using Zeebe.Client.Api.Responses;
@@ -48,8 +48,8 @@ public class ZeebeWorkerTests
 
         Assert.Throws<ArgumentNullException>(() => new ZeebeWorker(null, _loggerMock.Object, zeebeOptionsMock, workerOptionsMock));
         Assert.Throws<ArgumentNullException>(() => new ZeebeWorker(_monApiMock.Object, null, zeebeOptionsMock, workerOptionsMock));
-        Assert.Throws<ArgumentNullException>(() => new ZeebeWorker(_monApiMock.Object, _loggerMock.Object, null, workerOptionsMock));
-        Assert.Throws<ArgumentNullException>(() => new ZeebeWorker(_monApiMock.Object, _loggerMock.Object, zeebeOptionsMock, null));
+        Assert.Throws<ArgumentNullException>(() => new ZeebeWorker(_monApiMock.Object, _loggerMock.Object, null!, workerOptionsMock));
+        Assert.Throws<ArgumentNullException>(() => new ZeebeWorker(_monApiMock.Object, _loggerMock.Object, zeebeOptionsMock, null!));
     }
 
     [Fact]
@@ -126,10 +126,10 @@ public class ZeebeWorkerTests
             .Setup(j => j.Variables)
             .Returns("{}");
 
-        var resultApi = new MonApiPayload
+        var resultApi = new RespApi
         {
-            Hostname = "host123",
-            ApplicationName = "appXYZ"
+            Id = 2,
+            Message = "Test : Hello, World!"
         };
 
         _monApiMock

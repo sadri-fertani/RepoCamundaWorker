@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TestWrkCmd.KafkaListenerWorker": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
